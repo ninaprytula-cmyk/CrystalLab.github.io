@@ -6,152 +6,7 @@
 <title>Кристалізація солей із водних розчинів</title>
 
 <style>
-/* Початковий стан елементів */
-.reveal {
-  opacity: 0;
-  transform: translateY(28px);
-  transition:
-    opacity 0.8s ease,
-    transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
-}
 
-/* Коли елемент потрапляє в поле зору */
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Невелика затримка для послідовної появи */
-.reveal.delay-1 { transition-delay: 0.12s; }
-.reveal.delay-2 { transition-delay: 0.24s; }
-.reveal.delay-3 { transition-delay: 0.36s; }
-
-/* Не вимикаємо доступність для людей, які вимкнули анімації */
-@media (prefers-reduced-motion: reduce) {
-  .reveal {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-}
-<script>
-const revealElements = document.querySelectorAll(
-  "section, article, .card, figure, .media-placeholder, .content-block"
-);
-
-revealElements.forEach((element) => {
-  element.classList.add("reveal");
-});
-
-if ("IntersectionObserver" in window) {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-        } else {
-          entry.target.classList.remove("visible");
-        }
-      });
-    },
-    {
-      threshold: 0.12,
-      rootMargin: "0px 0px -35px 0px"
-    }
-  );
-
-  revealElements.forEach((element) => observer.observe(element));
-} else {
-  revealElements.forEach((element) => element.classList.add("visible"));
-}
-</script>
-/* Прибираємо стандартний курсор на комп'ютері */
-@media (pointer: fine) {
-  body,
-  a,
-  button,
-  input,
-  textarea,
-  select {
-    cursor: none;
-  }
-}
-
-/* Кристалик, що рухається за мишкою */
-.crystal-cursor {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 24px;
-  height: 30px;
-  pointer-events: none;
-  z-index: 99999;
-  transform: translate(-50%, -50%);
-  filter: drop-shadow(0 0 6px rgba(163, 130, 255, 0.8));
-  transition: filter 0.2s ease;
-}
-
-.crystal-cursor svg {
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-}
-
-.crystal-cursor.active {
-  filter: drop-shadow(0 0 12px #d9a7ff);
-}
-
-/* На телефонах залишаємо звичайне керування */
-@media (pointer: coarse) {
-  .crystal-cursor {
-    display: none;
-  }
-}
-
-<div class="crystal-cursor" id="crystalCursor" aria-hidden="true">
-  <svg viewBox="0 0 24 30" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <linearGradient id="crystalGradient" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stop-color="#ffffff"/>
-        <stop offset="45%" stop-color="#c9b5ff"/>
-        <stop offset="100%" stop-color="#8de5f2"/>
-      </linearGradient>
-    </defs>
-    <path
-      d="M12 1 L20 10 L16 25 L12 29 L8 25 L4 10 Z"
-      fill="url(#crystalGradient)"
-      stroke="#9b83e8"
-      stroke-width="1.2"
-    />
-    <path d="M12 1 L12 29 M4 10 L20 10 M4 10 L12 18 L20 10 M8 25 L12 18 L16 25"
-      fill="none"
-      stroke="#ffffff"
-      stroke-width="0.8"
-      opacity="0.9"
-    />
-  </svg>
-</div>
-
-<script>
-const crystalCursor = document.getElementById("crystalCursor");
-
-if (crystalCursor && window.matchMedia("(pointer: fine)").matches) {
-  document.addEventListener("mousemove", (event) => {
-    crystalCursor.style.left = event.clientX + "px";
-    crystalCursor.style.top = event.clientY + "px";
-  });
-
-  document.querySelectorAll("a, button, input, select").forEach((element) => {
-    element.addEventListener("mouseenter", () => {
-      crystalCursor.classList.add("active");
-    });
-
-    element.addEventListener("mouseleave", () => {
-      crystalCursor.classList.remove("active");
-    });
-  });
-}
-</script>
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Nunito:wght@400;600;700;800&display=swap');
 
 :root {
@@ -604,7 +459,154 @@ footer .logo { font-size:1.2rem; }
   .hero-art { min-height:270px; }
   th,td { padding:9px; }
 }
+/* Прибираємо стандартний курсор на комп'ютері */
+@media (pointer: fine) {
+  body,
+  a,
+  button,
+  input,
+  textarea,
+  select {
+    cursor: none;
+  }
+}
+
+/* Кристалик, що рухається за мишкою */
+.crystal-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 24px;
+  height: 30px;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 0 6px rgba(163, 130, 255, 0.8));
+  transition: filter 0.2s ease;
+}
+
+.crystal-cursor svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.crystal-cursor.active {
+  filter: drop-shadow(0 0 12px #d9a7ff);
+}
+
+/* На телефонах залишаємо звичайне керування */
+@media (pointer: coarse) {
+  .crystal-cursor {
+    display: none;
+  }
+}
+/* Початковий стан елементів */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* Коли елемент потрапляє в поле зору */
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Невелика затримка для послідовної появи */
+.reveal.delay-1 { transition-delay: 0.12s; }
+.reveal.delay-2 { transition-delay: 0.24s; }
+.reveal.delay-3 { transition-delay: 0.36s; }
+
+/* Не вимикаємо доступність для людей, які вимкнули анімації */
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 </style>
+<script>
+const revealElements = document.querySelectorAll(
+  "section, article, .card, figure, .media-placeholder, .content-block"
+);
+
+revealElements.forEach((element) => {
+  element.classList.add("reveal");
+});
+
+if ("IntersectionObserver" in window) {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+        } else {
+          entry.target.classList.remove("visible");
+        }
+      });
+    },
+    {
+      threshold: 0.12,
+      rootMargin: "0px 0px -35px 0px"
+    }
+  );
+
+  revealElements.forEach((element) => observer.observe(element));
+} else {
+  revealElements.forEach((element) => element.classList.add("visible"));
+}
+</script>
+<div class="crystal-cursor" id="crystalCursor" aria-hidden="true">
+  <svg viewBox="0 0 24 30" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="crystalGradient" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="45%" stop-color="#c9b5ff"/>
+        <stop offset="100%" stop-color="#8de5f2"/>
+      </linearGradient>
+    </defs>
+    <path
+      d="M12 1 L20 10 L16 25 L12 29 L8 25 L4 10 Z"
+      fill="url(#crystalGradient)"
+      stroke="#9b83e8"
+      stroke-width="1.2"
+    />
+    <path d="M12 1 L12 29 M4 10 L20 10 M4 10 L12 18 L20 10 M8 25 L12 18 L16 25"
+      fill="none"
+      stroke="#ffffff"
+      stroke-width="0.8"
+      opacity="0.9"
+    />
+  </svg>
+</div>
+
+<script>
+const crystalCursor = document.getElementById("crystalCursor");
+
+if (crystalCursor && window.matchMedia("(pointer: fine)").matches) {
+  document.addEventListener("mousemove", (event) => {
+    crystalCursor.style.left = event.clientX + "px";
+    crystalCursor.style.top = event.clientY + "px";
+  });
+
+  document.querySelectorAll("a, button, input, select").forEach((element) => {
+    element.addEventListener("mouseenter", () => {
+      crystalCursor.classList.add("active");
+    });
+
+    element.addEventListener("mouseleave", () => {
+      crystalCursor.classList.remove("active");
+    });
+  });
+}
+
+</script>
 </head>
 
 <body>
@@ -618,7 +620,7 @@ footer .logo { font-size:1.2rem; }
     <a href="#growth">Ріст</a>
     <a href="#minerals">Мінерали</a>
     <a href="#examples">Приклади</a>
-    <a href="#questions">Тест</a>
+    <a href="#quiz">Тест</a>
     <a href="#sources">Джерела</a>
   </nav>
 </header>
@@ -686,8 +688,8 @@ footer .logo { font-size:1.2rem; }
     </ol>
 
     <div class="image-slot">
-      <h4>📷 Місце для схеми 1</h4>
-      <div class="image-placeholder">Встав сюди схему трьох шляхів до пересичення</div>
+      <h4> Три шляхи до пересичення</h4>
+      <img src="https://i.postimg.cc/CK1F9sry/IMG-3844.jpg" alt="Три шляхи до пересичення">
       <!-- Щоб додати зображення, заміни блок image-placeholder на:
       <img src="ВСТАВ_СВОЄ_ПОСИЛАННЯ_НА_ЗОБРАЖЕННЯ" alt="Три шляхи до пересичення">
       -->
@@ -738,8 +740,8 @@ footer .logo { font-size:1.2rem; }
     </ol>
 
     <div class="image-slot">
-      <h4>📷 Місце для схеми 2</h4>
-      <div class="image-placeholder">Встав сюди схему гомогенної та гетерогенної нуклеації</div>
+      <h4>Гомогенна та гетерогенна нуклеація</h4>
+      <img src="https://i.postimg.cc/nc2fZQDt/IMG-3845.jpg" alt="Гомогенна та гетерогенна нуклеація">
       <!-- <img src="ВСТАВ_ПОСИЛАННЯ_НА_СХЕМУ" alt="Гомогенна та гетерогенна нуклеація"> -->
       <p class="caption">Порівняння зародження в об'ємі розчину та на поверхні частинки.</p>
     </div>
@@ -800,8 +802,8 @@ footer .logo { font-size:1.2rem; }
     </ol>
 
     <div class="image-slot">
-      <h4>📷 Місце для схеми 3</h4>
-      <div class="image-placeholder">Встав сюди схему росту кристала на поверхні</div>
+      <h4>Механізми росту кристала</h4>
+      <img src="https://i.postimg.cc/PfMR8nrF/IMG-3846.jpg" alt="Механізми росту кристала">
       <!-- <img src="ВСТАВ_ПОСИЛАННЯ_НА_СХЕМУ" alt="Механізми росту кристала"> -->
       <p class="caption">Можна показати реакційні центри, кінки, спіральний ріст та двовимірні острівці.</p>
     </div>
@@ -819,8 +821,8 @@ footer .logo { font-size:1.2rem; }
     <p>При малому Ca²⁺/SO₄²⁻ гіпс росте пластинками, при великому голками, бо різні грані по-різному реагують на склад розчину. Для кристалів загалом габітус залежить від умов зародження і росту, і це дає змогу відновлювати умови утворення мінералів.</p>
 
     <div class="image-slot">
-      <h4>📷 Місце для зображень 4</h4>
-      <div class="image-placeholder">Встав сюди зображення пластинчастого та голчастого гіпсу</div>
+      <h4>Різні форми кристалів гіпсу</h4>
+      <img src="https://i.postimg.cc/GhpnHcYV/IMG-3847.jpg" alt="Різні форми кристалів гіпсу">
       <!-- <img src="ВСТАВ_ПОСИЛАННЯ_НА_ЗОБРАЖЕННЯ" alt="Різні форми кристалів гіпсу"> -->
       <p class="caption">Порівняння габітусу гіпсу за різного співвідношення Ca²⁺/SO₄²⁻.</p>
     </div>
@@ -856,8 +858,8 @@ footer .logo { font-size:1.2rem; }
     <p>Моноклінний кристал із шарів CaSO₄, між якими розташовані молекули води. Слабкий водний прошарок дає досконалу спайність по (010).</p>
 
     <div class="image-slot">
-      <h4>📷 Місце для схеми 5</h4>
-      <div class="image-placeholder">Встав сюди схему шаруватої будови гіпсу</div>
+      <h4>Шарувата будова гіпсу</h4>
+     <img src="https://i.postimg.cc/Rhs8cHf2/IMG-3848.jpg" alt="Шарувата будова гіпсу">
       <!-- <img src="ВСТАВ_ПОСИЛАННЯ_НА_СХЕМУ" alt="Шарувата будова гіпсу"> -->
       <p class="caption">Будова гіпсу: шари CaSO₄ та молекули води між ними.</p>
     </div>
@@ -880,8 +882,8 @@ footer .logo { font-size:1.2rem; }
     </ul>
 
     <div class="image-slot">
-      <h4>📷 Місце для фотографій 6</h4>
-      <div class="image-placeholder">Встав сюди фотографії селеніту, алебастру та шовковистого шпату</div>
+      <h4>Різновиди гіпсу</h4>
+      <img src="https://i.postimg.cc/NFMCfjV5/IMG-3849.jpg" alt="Селеніт">
       <!-- <img src="ПОСИЛАННЯ_НА_ФОТО_СЕЛЕНІТУ" alt="Селеніт"> -->
       <!-- <img src="ПОСИЛАННЯ_НА_ФОТО_АЛЕБАСТРУ" alt="Алебастр"> -->
       <!-- <img src="ПОСИЛАННЯ_НА_ФОТО_ШПАТУ" alt="Шовковистий шпат"> -->
@@ -919,8 +921,8 @@ footer .logo { font-size:1.2rem; }
     <p>Чистий галіт безбарвний. Помаранчевий чи червоний відтінок дають включення оксиду заліза, сірий включення глини, а синій і пурпуровий забарвлення центрів кольору.</p>
 
     <div class="image-slot">
-      <h4>📷 Місце для фотографій 7</h4>
-      <div class="image-placeholder">Встав сюди фотографії безбарвного, рожевого, синього або пурпурового галіту</div>
+      <h4>Кристал галіту різного забарвлення</h4>
+      <img src="https://i.postimg.cc/jSNgj98B/IMG-3850.jpg" alt="Кристали галіту різного забарвлення">
       <!-- <img src="ВСТАВ_ПОСИЛАННЯ_НА_ФОТО" alt="Кристали галіту різного забарвлення"> -->
       <p class="caption">Колір галіту залежить від домішок, включень і дефектів кристалічної ґратки.</p>
     </div>
@@ -974,8 +976,8 @@ footer .logo { font-size:1.2rem; }
     </ol>
 
     <div class="image-slot">
-      <h4>📷 Місце для схеми 8</h4>
-      <div class="image-placeholder">Встав сюди схему шарування води та осадження гіпсу на межі шарів</div>
+      <h4>Шарування розсолу в пермському басейні</h4>
+      <img src="https://i.postimg.cc/Vk1Gdg3J/IMG-3851.jpg" alt="Шарування розсолу в пермському басейні">
       <!-- <img src="ВСТАВ_ПОСИЛАННЯ_НА_СХЕМУ" alt="Шарування розсолу в пермському басейні"> -->
       <p class="caption">Схематичний розріз басейну: щільний нижній розсіл, верхній шар води та зона осадження гіпсу.</p>
     </div>
@@ -1004,8 +1006,8 @@ footer .logo { font-size:1.2rem; }
     </div>
 
     <div class="image-slot">
-      <h4>📷 Місце для схеми 9</h4>
-      <div class="image-placeholder">Встав сюди графік або схему послідовності кристалізації солей у Калуші</div>
+      <h4>📷 Послідовність кристалізації солей у Калуському досліді</h4>
+      <img src="https://i.postimg.cc/BbT539ZX/IMG-3852.jpg" alt="Послідовність кристалізації солей у Калуському досліді">
       <!-- <img src="ВСТАВ_ПОСИЛАННЯ_НА_СХЕМУ" alt="Послідовність кристалізації солей у Калуському досліді"> -->
       <p class="caption">Послідовність утворення NaCl, шеніту, KCl та епсоміту за поступового охолодження.</p>
     </div>
@@ -1033,8 +1035,8 @@ footer .logo { font-size:1.2rem; }
   </div>
   <div class="article">
     <div class="image-slot">
-      <h4>📊 Місце для головної схеми</h4>
-      <div class="image-placeholder">Встав сюди повну схему процесу кристалізації</div>
+      <h4>📊Схема процесу кристалізації солей</h4>
+      <img src="https://i.postimg.cc/pT8zQbFg/IMG-3853.jpg" alt="Схема процесу кристалізації солей">
       <!-- <img src="ВСТАВ_ПОСИЛАННЯ_НА_ГОЛОВНУ_СХЕМУ" alt="Схема процесу кристалізації солей"> -->
       <p class="caption">Головна схема: умови пересичення → нуклеація → ріст → осадження мінералів.</p>
     </div>
@@ -1053,22 +1055,22 @@ footer .logo { font-size:1.2rem; }
     <div class="two-columns">
       <div class="image-slot">
         <h4>📷 Кубічна спайність галіту</h4>
-        <div class="image-placeholder">Встав сюди зображення галіту</div>
+        <img src="https://i.postimg.cc/hGQdgWpG/IMG-3854.jpg" alt="Кубічні кристали галіту">
         <!-- <img src="ПОСИЛАННЯ_НА_ФОТО" alt="Кубічні кристали галіту"> -->
       </div>
       <div class="image-slot">
         <h4>📷 Шарувата будова гіпсу</h4>
-        <div class="image-placeholder">Встав сюди схему структури гіпсу</div>
+        <img src="https://i.postimg.cc/8Cf6DQtj/IMG-3858.jpg" alt="Структура гіпсу">
         <!-- <img src="ПОСИЛАННЯ_НА_СХЕМУ" alt="Структура гіпсу"> -->
       </div>
       <div class="image-slot">
         <h4>📷 Габітус гіпсу</h4>
-        <div class="image-placeholder">Встав сюди пластинчасті та голчасті кристали</div>
+        <img src="https://i.postimg.cc/QdpqTpjS/IMG-3860.jpg" alt="Різні габітуси гіпсу">
         <!-- <img src="ПОСИЛАННЯ_НА_ФОТО" alt="Різні габітуси гіпсу"> -->
       </div>
       <div class="image-slot">
         <h4>📷 Солеварні ставки</h4>
-        <div class="image-placeholder">Встав сюди фотографію солеварних ставків</div>
+       <img src="https://i.postimg.cc/3wtmX1V1/IMG-3861.jpg" alt="Солеварні ставки">
         <!-- <img src="ПОСИЛАННЯ_НА_ФОТО" alt="Солеварні ставки"> -->
       </div>
     </div>
@@ -1099,7 +1101,7 @@ footer .logo { font-size:1.2rem; }
 
     <div class="image-slot">
       <h4>📷 Місце для схеми 10</h4>
-      <div class="image-placeholder">Встав сюди схему зворотного зв'язку між випаровуванням, пересиченням, ростом та осіданням</div>
+      <img src="https://i.postimg.cc/5tr6k7Vp/IMG-3863.jpg" alt="Зворотний зв'язок у природній кристалізації">
       <!-- <img src="ВСТАВ_ПОСИЛАННЯ_НА_СХЕМУ" alt="Зворотний зв'язок у природній кристалізації"> -->
     </div>
 
